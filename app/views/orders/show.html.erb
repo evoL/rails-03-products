@@ -1,0 +1,35 @@
+<h1>Orders</h1>
+
+<% if @orders.empty? %>
+  <p>No orders found.</p>
+<% else %>
+  <dl>
+    <% @orders.each do |order| %>
+    <dt>Order #<%= order.id %> by <strong><%= order.customer %></strong></dt>
+    <dd>
+      <table>
+        <thead>
+          <tr>
+            <th>Product name</th>
+            <th>Quantity</th>
+            <th>Unit price</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% order.order_lines.each do |line| %>
+            <tr>
+              <td class="product_name"><%= line.product.name %></td>
+              <td class="quantity"><%= line.quantity %></td>
+              <td class="price"><%= format_price(line.product.price) %></td>
+            </tr>
+          <% end -%>
+          <tr>
+            <td colspan="2" class="total">Total:</td>
+            <td class="total price"><%= format_price(order.total) %></td>
+          </tr>
+        </tbody>
+      </table>
+    </dd>
+    <% end -%>
+  </dl>
+<% end -%>
